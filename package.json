@@ -1,0 +1,25 @@
+{
+  "name": "ui-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "babel.config.js",
+  "scripts": {
+    "test": "playwright test  --project=\"chromium\"",
+    "test-headed": "playwright test --headed",
+    "tests-ui": "npx playwright test --ui",
+    "prettier": "npx prettier --write \"**/*.{js,jsx}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/eslint-parser": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/register": "^7.28.3",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.2",
+    "prettier": "^3.7.4"
+  }
+}
