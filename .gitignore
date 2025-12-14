@@ -267,3 +267,5 @@ junit.xml
 
 # Playwright
 /playwright/.auth/
+
+TEST2.1.md

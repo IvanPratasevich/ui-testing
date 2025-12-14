@@ -4,12 +4,12 @@ export default class BasePage {
   }
 
   async navigateTo(url) {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
+    await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
   }
 
-  async clickOnButton(name) {
-    await this.page.getByRole('button', { name }).click();
-  }
+  // async clickOnButton(name) {
+  //   await this.page.getByRole('button', { name }).click();
+  // }
 
   async clickOnElementByLocator(locator) {
     await locator.waitFor({ state: 'visible' });
@@ -32,7 +32,11 @@ export default class BasePage {
     await locator.waitFor({ state: 'visible' });
   }
 
-  async isElementVisible(locator) {
-    return await locator.isVisible();
+  async isElementVisible(locator, timeout = 7000) {
+    try {
+      return await locator.isVisible({ timeout });
+    } catch {
+      return false;
+    }
   }
 }
