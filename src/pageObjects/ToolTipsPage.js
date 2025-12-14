@@ -6,7 +6,7 @@ export default class ToolTipsPage extends BasePage {
 
     // elememts for hover
     this.hoverButton = page.locator('#toolTipButton');
-    this.hoverTextField = page.locator('#toolTipTextField'); // ИСПРАВЛЕНО
+    this.hoverTextField = page.locator('#toolTipTextField');
     this.contraryLink = page.locator('a:has-text("Contrary")').first();
     this.sectionLink = page.locator('xpath=//a[contains(text(), "1.10.32")]');
 
@@ -22,7 +22,7 @@ export default class ToolTipsPage extends BasePage {
   }
 
   async hoverOnTextField() {
-    await this.hoverOnElement(this.hoverTextField); // ИСПРАВЛЕНО
+    await this.hoverOnElement(this.hoverTextField);
   }
 
   async hoverOnContraryLink() {
