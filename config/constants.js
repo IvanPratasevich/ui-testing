@@ -1,3 +1,3 @@
 export default {
-  colors: ['Red', 'Green', 'Indigo', 'Blue', 'Yellow', 'Black', 'Magenta', 'White'],
+  colors: ['Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Black'],
 };
