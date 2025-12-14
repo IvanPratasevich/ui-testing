@@ -4,7 +4,7 @@ export default class BasePage {
   }
 
   async navigateTo(url) {
-    await this.page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await this.page.goto(url, { waitUntil: 'load', timeout: 60000 });
   }
 
   // async clickOnButton(name) {
@@ -21,6 +21,7 @@ export default class BasePage {
   }
 
   async hoverOnElement(element) {
+    await this.waitForElementVisible(element);
     await element.hover();
   }
 

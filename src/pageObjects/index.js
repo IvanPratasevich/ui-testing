@@ -1,3 +1,4 @@
 import AlertsPage from './AlertsPage.js';
+import ToolTipsPage from './ToolTipsPage.js';
 
-export { AlertsPage };
+export { AlertsPage, ToolTipsPage };
