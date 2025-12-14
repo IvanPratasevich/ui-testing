@@ -99,7 +99,6 @@ test.describe('ToolTips Page Tests', () => {
 
     const ariaDescribedBy = await toolTipsPage.hoverTextField.getAttribute('aria-describedby'); // ЛОКАТОР
     expect(ariaDescribedBy).toBe('textFieldToolTip');
-    console.log('TextField aria-describedby:', ariaDescribedBy);
   });
 
   test('Test 8: aria-describedby appears on Contrary link hover', async ({ page }) => {
