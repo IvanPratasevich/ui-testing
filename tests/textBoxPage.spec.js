@@ -143,4 +143,27 @@ test.describe('Text Box Page Tests', () => {
       expect(hasErrorClass).toBe(false);
     }
   });
+
+  test('Test 10: submit empty form without filling any fields', async () => {
+    await textBoxPage.clickSubmit();
+
+    const isOutputVisible = await textBoxPage.isOutputVisible();
+    expect(isOutputVisible).toBe(false);
+  });
+
+  test('Test 11: submit form with only full name filled', async () => {
+    const fullName = fakerator.names.name();
+
+    await textBoxPage.fillFullName(fullName);
+    await textBoxPage.clickSubmit();
+
+    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+
+    const outputName = await textBoxPage.getOutputName();
+    expect(outputName).toContain(fullName);
+
+    expect(await textBoxPage.isElementVisible(textBoxPage.outputEmail)).toBe(false);
+    expect(await textBoxPage.isElementVisible(textBoxPage.outputCurrentAddress)).toBe(false);
+    expect(await textBoxPage.isElementVisible(textBoxPage.outputPermanentAddress)).toBe(false);
+  });
 });
