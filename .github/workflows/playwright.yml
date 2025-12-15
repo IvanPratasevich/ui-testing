@@ -2,7 +2,7 @@ name: Tests
 
 on:
   schedule:
-    - cron: '0 9 * * *'  # Daily at 9:00 AM UTC (12:00 PM Moscow)
+    - cron: '0 9 * * *'
 
   pull_request:
     branches: [ main, develop ]
@@ -82,9 +82,9 @@ jobs:
         with:
           name: test-results-${{ matrix.browser }}-${{ matrix.viewport.width }}x${{ matrix.viewport.height }}
           path: |
+            junit-results.xml
             test-results/
             test-results.json
-            junit-results.xml
           retention-days: 30
 
       - name: Upload Screenshots on Failure
@@ -94,10 +94,3 @@ jobs:
           name: screenshots-${{ matrix.browser }}-${{ matrix.viewport.width }}x${{ matrix.viewport.height }}
           path: test-results/**/*-failed-*.png
           retention-days: 7
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always() && github.event_name == 'pull_request' && hashFiles('junit-results.xml') != ''
-        with:
-          files: junit-results.xml
-          check_name: Test Results - ${{ matrix.browser }} ${{ matrix.viewport.width }}x${{ matrix.viewport.height }}
