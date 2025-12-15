@@ -1,4 +1,3 @@
 import AdBlock from './AdBlock';
-import Randomizer from './Randomizer.js';
-
-export { AdBlock, Randomizer };
+import DataGenerator from './DataGenerator';
+export { AdBlock, DataGenerator };
