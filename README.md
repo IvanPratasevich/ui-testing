@@ -32,8 +32,6 @@ npm test
 <img width="1795" height="668" alt="image" src="https://github.com/user-attachments/assets/cd72de1d-4595-4a26-85f3-be9b6666fb40" />
 <img width="1099" height="856" alt="image" src="https://github.com/user-attachments/assets/4170e275-3901-48e1-8955-c697b777f3d6" />
 
-
-
 ### Cross-Browser Testing
 
 ```
@@ -99,6 +97,7 @@ npx playwright test tests/practiceFormPage.spec.js --project=chromium-1920x1080
 # After test completion
 npx playwright show-report
 ```
+
 ## CI/CD
 
 Tests run automatically:
@@ -110,8 +109,6 @@ Tests run automatically:
 <img width="1855" height="655" alt="image" src="https://github.com/user-attachments/assets/f378b91e-a0d1-4d6f-b4fb-5ea1ce7fc3e4" />
 <img width="1321" height="715" alt="image" src="https://github.com/user-attachments/assets/1ef701aa-1952-4fd8-b548-9935626a1d4c" />
 <img width="1038" height="875" alt="image" src="https://github.com/user-attachments/assets/0247edd4-e14e-45ce-b789-7fc61d8c3805" />
-
-
 
 ### CI Configuration:
 
@@ -132,6 +129,7 @@ npx playwright show-report
 ### In CI/CD
 
 Artifacts available in GitHub Actions:
+
 1. Go to Actions tab ---> select workflow run
 2. Download:
    - `playwright-report` - HTML report

@@ -5,10 +5,10 @@ on:
     - cron: '0 9 * * *'
 
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
   push:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
     inputs:

@@ -10,7 +10,8 @@
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
