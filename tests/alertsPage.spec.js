@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { AdBlock } from '../src/utils';
 import { AlertsPage } from '../src/pageObjects';
-import data from '../config/Constants.js';
 import Fakerator from 'fakerator';
 
 const fakerator = Fakerator('lt-LT');
