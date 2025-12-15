@@ -29,6 +29,11 @@ npx playwright install
 npm test
 ```
 
+<img width="1795" height="668" alt="image" src="https://github.com/user-attachments/assets/cd72de1d-4595-4a26-85f3-be9b6666fb40" />
+<img width="1099" height="856" alt="image" src="https://github.com/user-attachments/assets/4170e275-3901-48e1-8955-c697b777f3d6" />
+
+
+
 ### Cross-Browser Testing
 
 ```
