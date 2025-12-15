@@ -4,10 +4,13 @@
   "description": "",
   "main": "babel.config.js",
   "scripts": {
-    "test": "playwright test  --project=\"chromium\"",
-    "test-headed": "playwright test --headed",
-    "test-ui": "npx playwright test --ui",
-    "prettier": "npx prettier --write \"**/*.{js,jsx}\""
+    "test": "playwright test",
+    "test:chrome": "playwright test --project=chromium-1920x1080",
+    "test:firefox": "playwright test --project=firefox-1920x1080",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "test:ui": "playwright test --ui"
   },
   "keywords": [],
   "author": "",
@@ -22,5 +25,8 @@
     "@types/node": "^25.0.2",
     "fakerator": "^0.3.6",
     "prettier": "^3.7.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }

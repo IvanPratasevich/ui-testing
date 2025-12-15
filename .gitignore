@@ -266,6 +266,12 @@ junit.xml
 /html-report/
 
 # Playwright
+playwright-report/
+test-results/
+test-results.json
+junit-results.xml
+
+# Playwright
 /playwright/.auth/
 
 TEST2.1.md

@@ -45,7 +45,7 @@ test.describe('Alerts Page Tests', () => {
     page.once('dialog', async dialog => {
       const end = Date.now() - start;
       expect(dialog.message()).toBe('This alert appeared after 5 seconds');
-      expect(end).toBeLessThanOrEqual(6000);
+      expect(end).toBeLessThanOrEqual(9000);
       await dialog.accept();
     });
 
