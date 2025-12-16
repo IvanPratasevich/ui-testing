@@ -33,14 +33,17 @@ export default class PracticeFormPage extends BasePage {
 
     this.modalContent = page.locator('.modal-content');
     this.modalTitle = page.locator('#example-modal-sizes-title-lg');
+
+    this.stateOptions = page.locator('div[id^="react-select-3-option"]');
+    this.cityOptions = page.locator('div[id^="react-select-4-option"]');
   }
 
   getStateOption(state) {
-    return this.page.locator(`div[id^="react-select-3-option"]:has-text("${state}")`);
+    return this.stateOptions.filter({ hasText: state });
   }
 
   getCityOption(city) {
-    return this.page.locator(`div[id^="react-select-4-option"]:has-text("${city}")`);
+    return this.cityOptions.filter({ hasText: city });
   }
 
   async fillFirstName(firstName) {
