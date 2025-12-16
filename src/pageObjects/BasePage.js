@@ -7,10 +7,6 @@ export default class BasePage {
     await this.page.goto(url, { waitUntil: 'load', timeout: 60000 });
   }
 
-  // async clickOnButton(name) {
-  //   await this.page.getByRole('button', { name }).click();
-  // }
-
   async clickOnElementByLocator(locator) {
     await locator.waitFor({ state: 'visible' });
     const isEnabled = await locator.isEnabled();
