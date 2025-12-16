@@ -12,6 +12,8 @@ export default class PracticeFormPage extends BasePage {
     this.genderFemaleLabel = page.locator('//label[text()="Female"]');
     this.genderOtherLabel = page.locator('//label[text()="Other"]');
 
+    this.subjectOption = subject => page.locator(`div[id^="react-select"][id*="option"]:text-is("${subject}")`);
+
     this.mobileInput = page.locator('//input[@id="userNumber"]');
 
     this.subjectsInput = page.locator(
@@ -80,9 +82,10 @@ export default class PracticeFormPage extends BasePage {
 
   async fillSubjects(subjects) {
     for (const subject of subjects) {
-      await this.subjectsInput.click();
       await this.subjectsInput.fill(subject);
-      await this.page.keyboard.press('Enter');
+      const option = this.subjectOption(subject);
+      await option.waitFor({ state: 'visible' });
+      await option.click();
     }
   }
 
