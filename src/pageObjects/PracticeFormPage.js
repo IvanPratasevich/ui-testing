@@ -7,19 +7,20 @@ export default class PracticeFormPage extends BasePage {
     this.firstNameInput = page.locator('#firstName');
     this.lastNameInput = page.locator('#lastName');
 
-    this.emailInput = page.locator('input[type="text"]#userEmail');
-
-    this.genderMaleLabel = page.locator('label[for="gender-radio-1"]');
-    this.genderFemaleLabel = page.locator('label[for="gender-radio-2"]');
-    this.genderOtherLabel = page.locator('label[for="gender-radio-3"]');
+    this.emailInput = page.locator('//label[text()="Email"]/ancestor::div[contains(@id,"userEmail-wrapper")]//input');
+    this.genderMaleLabel = page.locator('//label[text()="Male"]');
+    this.genderFemaleLabel = page.locator('//label[text()="Female"]');
+    this.genderOtherLabel = page.locator('//label[text()="Other"]');
 
     this.mobileInput = page.locator('//input[@id="userNumber"]');
 
-    this.subjectsInput = page.locator('#subjectsInput');
+    this.subjectsInput = page.locator(
+      '//label[text()="Subjects"]/ancestor::div[contains(@id,"subjectsWrapper")]//input',
+    );
 
-    this.hobbySportsLabel = page.locator('label[for="hobbies-checkbox-1"]');
-    this.hobbyReadingLabel = page.locator('label[for="hobbies-checkbox-2"]');
-    this.hobbyMusicLabel = page.locator('label[for="hobbies-checkbox-3"]');
+    this.hobbySportsLabel = page.locator('//label[text()="Sports"]');
+    this.hobbyReadingLabel = page.locator('//label[text()="Reading"]');
+    this.hobbyMusicLabel = page.locator('//label[text()="Music"]');
 
     this.uploadPictureInput = page.locator('#uploadPicture');
 
