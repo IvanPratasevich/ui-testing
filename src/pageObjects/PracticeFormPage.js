@@ -36,6 +36,8 @@ export default class PracticeFormPage extends BasePage {
 
     this.stateOptions = page.locator('div[id^="react-select-3-option"]');
     this.cityOptions = page.locator('div[id^="react-select-4-option"]');
+
+    this.resultTableRows = page.locator('tr');
   }
 
   getStateOption(state) {
@@ -47,7 +49,7 @@ export default class PracticeFormPage extends BasePage {
   }
 
   async fillFirstName(firstName) {
-    await this.waitForElementVisible(this.firstNameInput);
+    await this.firstNameInput.waitFor({ state: 'visible' });
     await this.firstNameInput.fill(firstName);
   }
 
@@ -66,7 +68,10 @@ export default class PracticeFormPage extends BasePage {
       Female: this.genderFemaleLabel,
       Other: this.genderOtherLabel,
     };
-    await this.clickOnElementByLocator(genderMap[gender]);
+
+    const label = genderMap[gender];
+
+    await label.click();
   }
 
   async fillMobile(mobile) {
@@ -75,15 +80,9 @@ export default class PracticeFormPage extends BasePage {
 
   async fillSubjects(subjects) {
     for (const subject of subjects) {
-      try {
-        await this.subjectsInput.click();
-        await this.subjectsInput.type(subject, { delay: 50 });
-        await this.page.waitForTimeout(300);
-        await this.page.keyboard.press('Enter');
-        await this.page.waitForTimeout(200);
-      } catch (error) {
-        console.log(`Failed to add subject: ${subject}`, error.message);
-      }
+      await this.subjectsInput.click();
+      await this.subjectsInput.fill(subject);
+      await this.page.keyboard.press('Enter');
     }
   }
 
@@ -93,8 +92,13 @@ export default class PracticeFormPage extends BasePage {
       Reading: this.hobbyReadingLabel,
       Music: this.hobbyMusicLabel,
     };
+
+    await this.page.keyboard.press('Escape');
+
     for (const hobby of hobbies) {
-      await this.clickOnElementByLocator(hobbyMap[hobby]);
+      const hobbyLocator = hobbyMap[hobby];
+      await hobbyLocator.waitFor({ state: 'visible' });
+      await hobbyLocator.click();
     }
   }
 
@@ -128,13 +132,13 @@ export default class PracticeFormPage extends BasePage {
   }
 
   async clickSubmit() {
-    await this.page.keyboard.press('Escape');
-    await this.page.waitForTimeout(200);
-
+    await this.submitButton.waitFor({ state: 'visible' });
+    const isEnabled = this.submitButton.isEnabled();
+    if (!isEnabled) {
+      throw new Error('Submit button is not enabled');
+    }
     await this.submitButton.scrollIntoViewIfNeeded();
-    await this.page.waitForTimeout(300);
-
-    await this.clickOnElementByLocator(this.submitButton);
+    await this.submitButton.click();
   }
 
   async isModalVisible() {
@@ -146,7 +150,7 @@ export default class PracticeFormPage extends BasePage {
   }
 
   async getResultValue(label) {
-    const row = this.page.locator(`tr:has(td:text-is("${label}"))`);
+    const row = this.resultTableRows.filter({ hasText: label });
     const valueCell = row.locator('td').nth(1);
     return await valueCell.textContent();
   }
