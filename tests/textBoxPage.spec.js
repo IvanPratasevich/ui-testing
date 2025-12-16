@@ -29,6 +29,7 @@ test.describe('Text Box Page Tests', () => {
     const permanentAddress = fakerator.address.street();
 
     await textBoxPage.fillForm(fullName, email, currentAddress, permanentAddress);
+    await textBoxPage.clickSubmit();
 
     await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
     expect(await textBoxPage.isOutputVisible()).toBe(true);
@@ -76,6 +77,7 @@ test.describe('Text Box Page Tests', () => {
     const specialAddress = '123 LONG St., SRWQG #456, NEW-YORK, State 123456789';
 
     await textBoxPage.fillForm(fullName, email, specialAddress, specialAddress);
+    await textBoxPage.clickSubmit();
 
     await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
 
