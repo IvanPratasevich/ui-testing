@@ -15,157 +15,247 @@ test.describe('Text Box Page Tests', () => {
   });
 
   test('Test 1: all form fields are visible', async () => {
-    expect(await textBoxPage.isElementVisible(textBoxPage.fullNameInput)).toBe(true);
-    expect(await textBoxPage.isElementVisible(textBoxPage.emailInput)).toBe(true);
-    expect(await textBoxPage.isElementVisible(textBoxPage.currentAddressTextarea)).toBe(true);
-    expect(await textBoxPage.isElementVisible(textBoxPage.permanentAddressTextarea)).toBe(true);
-    expect(await textBoxPage.isElementVisible(textBoxPage.submitButton)).toBe(true);
+    await test.step('Step 1: Verify all form fields and submit button are visible', async () => {
+      expect(await textBoxPage.isElementVisible(textBoxPage.fullNameInput)).toBe(true);
+      expect(await textBoxPage.isElementVisible(textBoxPage.emailInput)).toBe(true);
+      expect(await textBoxPage.isElementVisible(textBoxPage.currentAddressTextarea)).toBe(true);
+      expect(await textBoxPage.isElementVisible(textBoxPage.permanentAddressTextarea)).toBe(true);
+      expect(await textBoxPage.isElementVisible(textBoxPage.submitButton)).toBe(true);
+    });
   });
 
   test('Test 2: fill form with random data and verify output', async () => {
-    const fullName = fakerator.names.name();
-    const email = fakerator.internet.email();
-    const currentAddress = fakerator.address.street();
-    const permanentAddress = fakerator.address.street();
+    let fullName, email, currentAddress, permanentAddress;
 
-    await textBoxPage.fillForm(fullName, email, currentAddress, permanentAddress);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Generate random test data', async () => {
+      fullName = fakerator.names.name();
+      email = fakerator.internet.email();
+      currentAddress = fakerator.address.street();
+      permanentAddress = fakerator.address.street();
+    });
 
-    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
-    expect(await textBoxPage.isOutputVisible()).toBe(true);
+    await test.step('Step 2: Fill all form fields with generated data', async () => {
+      await textBoxPage.fillForm(fullName, email, currentAddress, permanentAddress);
+    });
 
-    const outputName = await textBoxPage.getOutputName();
-    const outputEmail = await textBoxPage.getOutputEmail();
-    const outputCurrentAddr = await textBoxPage.getOutputCurrentAddress();
-    const outputPermanentAddr = await textBoxPage.getOutputPermanentAddress();
+    await test.step('Step 3: Submit the form', async () => {
+      await textBoxPage.clickSubmit();
+    });
 
-    expect(outputName).toContain(fullName);
-    expect(outputEmail).toContain(email);
-    expect(outputCurrentAddr).toContain(currentAddress);
-    expect(outputPermanentAddr).toContain(permanentAddress);
+    await test.step('Step 4: Verify output section is visible', async () => {
+      await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+      expect(await textBoxPage.isOutputVisible()).toBe(true);
+    });
+
+    await test.step('Step 5: Verify output contains correct data', async () => {
+      const outputName = await textBoxPage.getOutputName();
+      const outputEmail = await textBoxPage.getOutputEmail();
+      const outputCurrentAddr = await textBoxPage.getOutputCurrentAddress();
+      const outputPermanentAddr = await textBoxPage.getOutputPermanentAddress();
+
+      expect(outputName).toContain(fullName);
+      expect(outputEmail).toContain(email);
+      expect(outputCurrentAddr).toContain(currentAddress);
+      expect(outputPermanentAddr).toContain(permanentAddress);
+    });
   });
 
   test('Test 3: fill only required fields', async () => {
-    const fullName = fakerator.names.name();
-    const email = fakerator.internet.email();
+    let fullName, email;
 
-    await textBoxPage.fillFullName(fullName);
-    await textBoxPage.fillEmail(email);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Generate required test data', async () => {
+      fullName = fakerator.names.name();
+      email = fakerator.internet.email();
+    });
 
-    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    await test.step('Step 2: Fill only full name and email', async () => {
+      await textBoxPage.fillFullName(fullName);
+      await textBoxPage.fillEmail(email);
+    });
 
-    const outputName = await textBoxPage.getOutputName();
-    const outputEmail = await textBoxPage.getOutputEmail();
+    await test.step('Step 3: Submit the form', async () => {
+      await textBoxPage.clickSubmit();
+    });
 
-    expect(outputName).toContain(fullName);
-    expect(outputEmail).toContain(email);
+    await test.step('Step 4: Verify output section is visible', async () => {
+      await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    });
+
+    await test.step('Step 5: Verify output contains name and email', async () => {
+      const outputName = await textBoxPage.getOutputName();
+      const outputEmail = await textBoxPage.getOutputEmail();
+
+      expect(outputName).toContain(fullName);
+      expect(outputEmail).toContain(email);
+    });
   });
 
   test('Test 4: submit button is clickable', async () => {
-    const fullName = fakerator.names.name();
+    let fullName;
 
-    await textBoxPage.fillFullName(fullName);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Generate full name', async () => {
+      fullName = fakerator.names.name();
+    });
 
-    expect(await textBoxPage.isOutputVisible()).toBe(true);
+    await test.step('Step 2: Fill full name field', async () => {
+      await textBoxPage.fillFullName(fullName);
+    });
+
+    await test.step('Step 3: Click submit button', async () => {
+      await textBoxPage.clickSubmit();
+    });
+
+    await test.step('Step 4: Verify output is displayed', async () => {
+      expect(await textBoxPage.isOutputVisible()).toBe(true);
+    });
   });
 
   test('Test 5: form handles special characters in address', async () => {
-    const fullName = fakerator.names.name();
-    const email = fakerator.internet.email();
-    const specialAddress = '123 LONG St., SRWQG #456, NEW-YORK, State 123456789';
+    let fullName, email, specialAddress;
 
-    await textBoxPage.fillForm(fullName, email, specialAddress, specialAddress);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Generate test data with special characters', async () => {
+      fullName = fakerator.names.name();
+      email = fakerator.internet.email();
+      specialAddress = '123 LONG St., SRWQG #456, NEW-YORK, State 123456789';
+    });
 
-    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    await test.step('Step 2: Fill form with special address', async () => {
+      await textBoxPage.fillForm(fullName, email, specialAddress, specialAddress);
+    });
 
-    const outputCurrentAddr = await textBoxPage.getOutputCurrentAddress();
-    expect(outputCurrentAddr).toContain(specialAddress);
+    await test.step('Step 3: Submit the form', async () => {
+      await textBoxPage.clickSubmit();
+    });
+
+    await test.step('Step 4: Verify output section is visible', async () => {
+      await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    });
+
+    await test.step('Step 5: Verify special characters are preserved in output', async () => {
+      const outputCurrentAddr = await textBoxPage.getOutputCurrentAddress();
+      expect(outputCurrentAddr).toContain(specialAddress);
+    });
   });
 
   test('Test 6: email field validation with invalid email', async ({ page }) => {
-    const invalidEmail = 's@';
+    await test.step('Step 1: Fill email with invalid format', async () => {
+      const invalidEmail = 's@';
+      await textBoxPage.fillEmail(invalidEmail);
+    });
 
-    await textBoxPage.fillEmail(invalidEmail);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 2: Submit the form', async () => {
+      await textBoxPage.clickSubmit();
+    });
 
-    const hasErrorClass = await textBoxPage.hasEmailErrorClass();
-    expect(hasErrorClass).toBe(true);
+    await test.step('Step 3: Verify error class is applied', async () => {
+      const hasErrorClass = await textBoxPage.hasEmailErrorClass();
+      expect(hasErrorClass).toBe(true);
+    });
 
-    await expect(textBoxPage.emailInputWithError).toBeVisible();
-
-    await expect(textBoxPage.emailInputWithError).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+    await test.step('Step 4: Verify email field shows visual error', async () => {
+      await expect(textBoxPage.emailInputWithError).toBeVisible();
+      await expect(textBoxPage.emailInputWithError).toHaveCSS('border-color', 'rgb(255, 0, 0)');
+    });
   });
 
   test('Test 7: email field validation with incomplete email missing domain', async ({ page }) => {
     const invalidEmails = ['s@', 'test@', 'user@', '@'];
 
-    for (const invalidEmail of invalidEmails) {
-      await textBoxPage.emailInput.clear();
-      await textBoxPage.fillEmail(invalidEmail);
-      await textBoxPage.clickSubmit();
+    await test.step('Step 1: Test multiple invalid email formats', async () => {
+      for (const invalidEmail of invalidEmails) {
+        await textBoxPage.emailInput.clear();
+        await textBoxPage.fillEmail(invalidEmail);
+        await textBoxPage.clickSubmit();
 
-      const hasErrorClass = await textBoxPage.hasEmailErrorClass();
-      expect(hasErrorClass).toBe(true);
-    }
+        const hasErrorClass = await textBoxPage.hasEmailErrorClass();
+        expect(hasErrorClass).toBe(true);
+      }
+    });
   });
 
   test('Test 8: email field validation with valid email removes error', async ({ page }) => {
-    const invalidEmail = 's@';
-    const validEmail = 's@gmail.com';
+    let hasErrorClass;
 
-    await textBoxPage.fillEmail(invalidEmail);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Fill and submit invalid email', async () => {
+      const invalidEmail = 's@';
+      await textBoxPage.fillEmail(invalidEmail);
+      await textBoxPage.clickSubmit();
+    });
 
-    let hasErrorClass = await textBoxPage.hasEmailErrorClass();
-    expect(hasErrorClass).toBe(true);
+    await test.step('Step 2: Verify error is displayed', async () => {
+      hasErrorClass = await textBoxPage.hasEmailErrorClass();
+      expect(hasErrorClass).toBe(true);
+    });
 
-    await textBoxPage.fillEmail(validEmail);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 3: Fill and submit valid email', async () => {
+      const validEmail = 's@gmail.com';
+      await textBoxPage.fillEmail(validEmail);
+      await textBoxPage.clickSubmit();
+    });
 
-    hasErrorClass = await textBoxPage.hasEmailErrorClass();
-    expect(hasErrorClass).toBe(false);
+    await test.step('Step 4: Verify error is removed', async () => {
+      hasErrorClass = await textBoxPage.hasEmailErrorClass();
+      expect(hasErrorClass).toBe(false);
+    });
 
-    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
-    const outputEmail = await textBoxPage.getOutputEmail();
-    expect(outputEmail).toContain(validEmail);
+    await test.step('Step 5: Verify valid email appears in output', async () => {
+      await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+      const outputEmail = await textBoxPage.getOutputEmail();
+      expect(outputEmail).toContain('s@gmail.com');
+    });
   });
 
   test('Test 9: email field accepts valid email formats without error', async ({ page }) => {
     const validEmails = ['test@example.com', 'user.name@domain.co.lt', 'test12345@test-domain.com', 's@mail.co'];
 
-    for (const validEmail of validEmails) {
-      await textBoxPage.emailInput.clear();
-      await textBoxPage.fillEmail(validEmail);
-      await textBoxPage.clickSubmit();
+    await test.step('Step 1: Test multiple valid email formats', async () => {
+      for (const validEmail of validEmails) {
+        await textBoxPage.emailInput.clear();
+        await textBoxPage.fillEmail(validEmail);
+        await textBoxPage.clickSubmit();
 
-      const hasErrorClass = await textBoxPage.hasEmailErrorClass();
-      expect(hasErrorClass).toBe(false);
-    }
+        const hasErrorClass = await textBoxPage.hasEmailErrorClass();
+        expect(hasErrorClass).toBe(false);
+      }
+    });
   });
 
   test('Test 10: submit empty form without filling any fields', async () => {
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Submit empty form', async () => {
+      await textBoxPage.clickSubmit();
+    });
 
-    const isOutputVisible = await textBoxPage.isOutputVisible();
-    expect(isOutputVisible).toBe(false);
+    await test.step('Step 2: Verify output is not displayed', async () => {
+      const isOutputVisible = await textBoxPage.isOutputVisible();
+      expect(isOutputVisible).toBe(false);
+    });
   });
 
   test('Test 11: submit form with only full name filled', async () => {
-    const fullName = fakerator.names.name();
+    let fullName;
 
-    await textBoxPage.fillFullName(fullName);
-    await textBoxPage.clickSubmit();
+    await test.step('Step 1: Generate and fill only full name', async () => {
+      fullName = fakerator.names.name();
+      await textBoxPage.fillFullName(fullName);
+    });
 
-    await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    await test.step('Step 2: Submit the form', async () => {
+      await textBoxPage.clickSubmit();
+    });
 
-    const outputName = await textBoxPage.getOutputName();
-    expect(outputName).toContain(fullName);
+    await test.step('Step 3: Verify output section is visible', async () => {
+      await textBoxPage.waitForElementVisible(textBoxPage.outputSection);
+    });
 
-    expect(await textBoxPage.isElementVisible(textBoxPage.outputEmail)).toBe(false);
-    expect(await textBoxPage.isElementVisible(textBoxPage.outputCurrentAddress)).toBe(false);
-    expect(await textBoxPage.isElementVisible(textBoxPage.outputPermanentAddress)).toBe(false);
+    await test.step('Step 4: Verify only name is displayed in output', async () => {
+      const outputName = await textBoxPage.getOutputName();
+      expect(outputName).toContain(fullName);
+    });
+
+    await test.step('Step 5: Verify other fields are not displayed', async () => {
+      expect(await textBoxPage.isElementVisible(textBoxPage.outputEmail)).toBe(false);
+      expect(await textBoxPage.isElementVisible(textBoxPage.outputCurrentAddress)).toBe(false);
+      expect(await textBoxPage.isElementVisible(textBoxPage.outputPermanentAddress)).toBe(false);
+    });
   });
 });
