@@ -53,7 +53,6 @@ export default class TextBoxPage extends BasePage {
     await this.fillEmail(email);
     await this.fillCurrentAddress(currentAddress);
     await this.fillPermanentAddress(permanentAddress);
-    await this.clickSubmit();
   }
 
   async getOutputName() {
